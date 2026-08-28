@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Joint-Safe Fitness Quest</title>
+  <!-- Tailwind CSS via CDN for styling -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -18,8 +19,17 @@
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen pb-16 font-sans antialiased select-none">
 
-  <main class="max-w-md mx-auto px-4 pt-6">
+  <!-- Main Container -->
+  <main class="max-w-md mx-auto px-4 pt-4">
 
+    <!-- Top Navigation: Back to Hub -->
+    <div class="mb-3">
+      <a href="index.html" class="inline-flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-emerald-400 transition-colors">
+        &larr; Back to App Creations
+      </a>
+    </div>
+
+    <!-- Header & Character Status -->
     <header class="bg-slate-800 border border-slate-700 rounded-2xl p-5 mb-5 shadow-lg">
       <div class="flex items-center justify-between mb-3">
         <div>
@@ -36,6 +46,7 @@
         </div>
       </div>
 
+      <!-- XP Bar -->
       <div class="w-full bg-slate-700 h-3 rounded-full overflow-hidden mb-2">
         <div id="xp-bar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full w-0 transition-all duration-300"></div>
       </div>
@@ -45,6 +56,7 @@
       </div>
     </header>
 
+    <!-- Workout Selector Tabs -->
     <nav class="grid grid-cols-4 gap-1 bg-slate-800 p-1.5 rounded-xl mb-5 border border-slate-700 text-xs font-bold">
       <button onclick="switchTab('tue')" id="tab-tue" class="py-2 rounded-lg transition-all text-center">Hike</button>
       <button onclick="switchTab('wed')" id="tab-wed" class="py-2 rounded-lg transition-all text-center">Push</button>
@@ -52,6 +64,7 @@
       <button onclick="switchTab('sun')" id="tab-sun" class="py-2 rounded-lg transition-all text-center">Pull</button>
     </nav>
 
+    <!-- Active Quest Title -->
     <section class="flex items-center justify-between mb-3 px-1">
       <div>
         <h2 id="quest-title" class="text-lg font-bold text-white">Workout</h2>
@@ -62,14 +75,17 @@
       </button>
     </section>
 
+    <!-- Checklist Container -->
     <section id="checklist-container" class="space-y-3 mb-6"></section>
 
+    <!-- Complete Workout Button -->
     <button id="complete-btn" onclick="completeWorkout()" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] text-white font-bold rounded-xl shadow-lg transition duration-150 flex items-center justify-center gap-2">
       <span>Complete Quest (+50 Bonus XP)</span>
     </button>
 
   </main>
 
+  <!-- JavaScript Logic -->
   <script>
     // --- WORKOUT DATA ---
     const workouts = {
@@ -81,7 +97,7 @@
         tasks: [
           { name: "5-Min Nerve Floss & Mobility Warm-Up", cue: "Glides sciatic nerve at S1-L5 without spine strain" },
           { name: "Nature Trail Hike (45-60 min)", cue: "Short strides, soft dirt path, glute push-off" },
-          { name: "Post-Hike Calf & Quad Gentle Cool-Down", cue: "Avoid sharp lumbar flexion" }
+          { name: "Post-Hike Gentle Calf & Quad Stretch", cue: "Avoid sharp lumbar flexion" }
         ]
       },
       wed: {
@@ -222,7 +238,7 @@
       state.xp = Math.max(0, state.xp + amount);
       const calculatedLevel = Math.floor(state.xp / 100) + 1;
       if (calculatedLevel > state.level) {
-        alert(`🎉 LEVEL UP! You reached Level ${calculatedLevel}! Joint resilience +10!`);
+        alert(`🎉 LEVEL UP! You reached Level ${calculatedLevel}! Spine & joint resilience increased!`);
       }
       state.level = calculatedLevel;
     }
@@ -236,7 +252,6 @@
         return;
       }
 
-      // Check date for streak tracking
       const today = new Date().toDateString();
       if (state.lastCompletedDate !== today) {
         state.streak += 1;
@@ -245,7 +260,7 @@
 
       addXP(workout.bonusXp);
       saveState();
-      alert(`⚔️ Quest Completed! +${workout.bonusXp} Bonus XP awarded. Awesome job staying spine-safe!`);
+      alert(`⚔️ Quest Completed! +${workout.bonusXp} Bonus XP awarded. Great work staying joint-safe!`);
     }
 
     function resetDayChecklist() {
