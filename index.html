@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>App Creations | Launchpad</title>
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -14,8 +15,10 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased flex flex-col justify-between selection:bg-emerald-500 selection:text-white">
 
+  <!-- Main Hub Container -->
   <main class="max-w-lg mx-auto w-full px-5 pt-10 pb-8 flex-1">
     
+    <!-- Profile & Header Section -->
     <header class="mb-8 text-center sm:text-left">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-3">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -29,9 +32,12 @@
       </p>
     </header>
 
+    <!-- App Cards Grid -->
     <section class="space-y-4">
 
-      <a href="./WorkoutGame.html" class="group block bg-slate-900/90 border border-slate-800 hover:border-emerald-500/50 rounded-2xl p-5 shadow-lg hover:shadow-emerald-950/30 transition-all duration-200 active:scale-[0.98]">
+      <!-- APP 1: WorkoutGame (Active) -->
+      <!-- Points to WorkoutGame.html in the same directory -->
+      <a href="WorkoutGame.html" class="group block bg-slate-900/90 border border-slate-800 hover:border-emerald-500/50 rounded-2xl p-5 shadow-lg hover:shadow-emerald-950/30 transition-all duration-200 active:scale-[0.98]">
         <div class="flex items-start justify-between mb-3">
           <div class="flex items-center gap-3">
             <div class="w-12 h-12 rounded-xl bg-emerald-950/60 border border-emerald-800/50 flex items-center justify-center text-2xl group-hover:scale-105 transition-transform">
@@ -56,6 +62,7 @@
         </div>
       </a>
 
+      <!-- APP 2: Placeholder for Next Project (Coming Soon) -->
       <div class="block bg-slate-900/40 border border-slate-800/80 rounded-2xl p-5 opacity-70">
         <div class="flex items-start justify-between mb-3">
           <div class="flex items-center gap-3">
@@ -78,6 +85,7 @@
         </p>
       </div>
 
+      <!-- APP 3: Additional Placeholder -->
       <div class="block bg-slate-900/40 border border-slate-800/80 rounded-2xl p-5 opacity-70">
         <div class="flex items-start justify-between mb-3">
           <div class="flex items-center gap-3">
@@ -104,6 +112,7 @@
 
   </main>
 
+  <!-- Footer -->
   <footer class="max-w-lg mx-auto w-full px-5 py-6 border-t border-slate-900 text-center text-xs text-slate-600">
     <p>Hosted on GitHub Pages &bull; Maintained by <span class="text-slate-400 font-medium">@tmichelle-ops</span></p>
   </footer>
