@@ -33,7 +33,7 @@
     </div>
 
     <!-- Header & Character Status -->
-    <header class="bg-slate-900 border border-slate-800 rounded-2xl p-5 mb-5 shadow-lg">
+    <header class="bg-slate-900 border border-slate-800 rounded-2xl p-5 mb-4 shadow-lg">
       <div class="flex items-center justify-between mb-3">
         <div>
           <span id="rank-title" class="text-xs font-bold uppercase tracking-wider text-emerald-400">Spine Initiate</span>
@@ -82,23 +82,48 @@
       </div>
     </section>
 
-    <!-- Workout Selector Tabs -->
-    <nav class="grid grid-cols-4 gap-1 bg-slate-900 p-1.5 rounded-xl mb-5 border border-slate-800 text-xs font-bold">
-      <button onclick="switchTab('tue')" id="tab-tue" class="py-2 rounded-lg transition-all text-center">Hike</button>
-      <button onclick="switchTab('wed')" id="tab-wed" class="py-2 rounded-lg transition-all text-center">Push</button>
-      <button onclick="switchTab('fri')" id="tab-fri" class="py-2 rounded-lg transition-all text-center">Legs</button>
-      <button onclick="switchTab('sun')" id="tab-sun" class="py-2 rounded-lg transition-all text-center">Pull</button>
+    <!-- 7-DAY WEEK SELECTOR -->
+    <nav class="grid grid-cols-7 gap-1 bg-slate-900 p-1.5 rounded-xl mb-4 border border-slate-800 text-[11px] font-bold text-center">
+      <button onclick="switchDay('mon')" id="tab-mon" class="py-2 rounded-lg transition-all flex flex-col items-center">
+        <span>Mon</span><span class="text-[9px] opacity-70 font-normal">Rest</span>
+      </button>
+      <button onclick="switchDay('tue')" id="tab-tue" class="py-2 rounded-lg transition-all flex flex-col items-center">
+        <span>Tue</span><span class="text-[9px] opacity-70 font-normal">Hike</span>
+      </button>
+      <button onclick="switchDay('wed')" id="tab-wed" class="py-2 rounded-lg transition-all flex flex-col items-center">
+        <span>Wed</span><span class="text-[9px] opacity-70 font-normal">Push</span>
+      </button>
+      <button onclick="switchDay('thu')" id="tab-thu" class="py-2 rounded-lg transition-all flex flex-col items-center">
+        <span>Thu</span><span class="text-[9px] opacity-70 font-normal">Rest</span>
+      </button>
+      <button onclick="switchDay('fri')" id="tab-fri" class="py-2 rounded-lg transition-all flex flex-col items-center">
+        <span>Fri</span><span class="text-[9px] opacity-70 font-normal">Legs</span>
+      </button>
+      <button onclick="switchDay('sat')" id="tab-sat" class="py-2 rounded-lg transition-all flex flex-col items-center">
+        <span>Sat</span><span class="text-[9px] opacity-70 font-normal">Rest</span>
+      </button>
+      <button onclick="switchDay('sun')" id="tab-sun" class="py-2 rounded-lg transition-all flex flex-col items-center">
+        <span>Sun</span><span class="text-[9px] opacity-70 font-normal">Pull</span>
+      </button>
     </nav>
 
-    <!-- Active Quest Title -->
-    <section class="flex items-center justify-between mb-3 px-1">
-      <div>
-        <h2 id="quest-title" class="text-lg font-bold text-white">Workout</h2>
-        <p id="quest-desc" class="text-xs text-slate-400">Joint-safe & spine-spared routines</p>
+    <!-- Active Day Banner & Quest Title -->
+    <section class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-4 mb-4">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <span id="day-badge" class="px-2 py-0.5 text-[10px] font-black uppercase rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+            Wednesday
+          </span>
+          <span id="today-indicator" class="hidden px-2 py-0.5 text-[10px] font-black uppercase rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 animate-pulse">
+            Today
+          </span>
+        </div>
+        <button onclick="resetDayChecklist()" class="text-xs text-slate-500 hover:text-rose-400 underline transition">
+          Reset Tasks
+        </button>
       </div>
-      <button onclick="resetDayChecklist()" class="text-xs text-slate-400 hover:text-rose-400 underline transition">
-        Reset Day
-      </button>
+      <h2 id="quest-title" class="text-lg font-bold text-white">Workout Title</h2>
+      <p id="quest-desc" class="text-xs text-slate-400 mt-0.5">Joint-safe & spine-spared routine</p>
     </section>
 
     <!-- Checklist Container -->
@@ -106,7 +131,7 @@
 
     <!-- Complete Workout Button -->
     <button id="complete-btn" onclick="completeWorkout()" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] text-white font-bold rounded-xl shadow-lg transition duration-150 flex items-center justify-center gap-2">
-      <span>Complete Quest (+50 Bonus XP)</span>
+      <span id="complete-btn-text">Complete Daily Quest (+50 Bonus XP)</span>
     </button>
 
   </main>
@@ -122,56 +147,99 @@
       5: "Resilience Master"
     };
 
-    // --- WORKOUT DATA ---
-    const workouts = {
+    const daysMap = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+    const fullDayNames = {
+      mon: "Monday",
+      tue: "Tuesday",
+      wed: "Wednesday",
+      thu: "Thursday",
+      fri: "Friday",
+      sat: "Saturday",
+      sun: "Sunday"
+    };
+
+    // --- SCHEDULED ROUTINES BY DAY ---
+    const weeklySchedule = {
+      mon: {
+        title: "Active Recovery & Decompression",
+        desc: "Spine decompression and light mobility to prepare for the week.",
+        xpPerTask: 10,
+        bonusXp: 30,
+        tasks: [
+          { name: "5-Min Gentle Sciatic Nerve Flossing", cue: "Seated nerve glides, smooth and pain-free" },
+          { name: "Light 15-Min Walk or Gentle Mobility", cue: "Increases circulation without joint friction" },
+          { name: "Hydration & Anti-Inflammatory Check", cue: "Supports connective tissue recovery" }
+        ]
+      },
       tue: {
-        title: "Nature Trail Cardio",
-        desc: "Low-impact zone 2 walking; flat dirt terrain.",
+        title: "Nature Trail Cardio Hike",
+        desc: "Low-impact zone 2 cardio on packed-dirt trails.",
         xpPerTask: 20,
         bonusXp: 50,
         tasks: [
-          { name: "5-Min Nerve Floss & Mobility Warm-Up", cue: "Glides sciatic nerve at S1-L5 without spine strain" },
-          { name: "Nature Trail Hike (45-60 min)", cue: "Short strides, soft dirt path, glute push-off" },
-          { name: "Post-Hike Gentle Calf & Quad Stretch", cue: "Avoid sharp lumbar flexion" }
+          { name: "5-Min Nerve Floss & Mobility Warm-Up", cue: "Preps L5-S1 nerve root before walking" },
+          { name: "Nature Trail Hike (45–60 min)", cue: "Soft dirt path, shorter strides, glute drive" },
+          { name: "Post-Hike Calf & Quad Gentle Stretch", cue: "Avoid bending forward at waist" }
         ]
       },
       wed: {
-        title: "Push & Core Stability",
+        title: "Gym: Push & Core Stability",
         desc: "Chest support to eliminate lumbar shear force.",
         xpPerTask: 15,
         bonusXp: 50,
         tasks: [
-          { name: "Warm-Up: Cat-Cow, Nerve Floss, Bird-Dogs", cue: "Mid-back focus, neutral spine brace" },
-          { name: "Seated Chest Press Machine (3 × 10-12)", cue: "Back fully flat against backrest" },
-          { name: "30° Incline Dumbbell Bench Press (3 × 10-12)", cue: "Keep ribcage pinned, no lower-back arch" },
-          { name: "Seated DB Lateral Raises (3 × 12-15)", cue: "Seated removes spine sway entirely" },
-          { name: "Cable Rope Triceps Pushdowns (3 × 12-15)", cue: "Smooth elbow flexion, gentle on tendons" },
-          { name: "Dead Bugs or Bird-Dogs (3 × 8/side)", cue: "Anti-extension core brace" }
+          { name: "Warm-Up: Cat-Cow, Nerve Floss, Bird-Dogs", cue: "Mid-back mobility and core bracing" },
+          { name: "Seated Chest Press Machine (3 × 10–12)", cue: "Back fully supported against backrest" },
+          { name: "30° Incline DB Bench Press (3 × 10–12)", cue: "Ribcage pinned; no lumbar hyperextension" },
+          { name: "Seated DB Lateral Raises (3 × 12–15)", cue: "Sitting removes lower-back sway" },
+          { name: "Cable Rope Triceps Pushdowns (3 × 12–15)", cue: "Smooth constant tension on elbow joints" },
+          { name: "Dead Bugs or Bird-Dogs (3 × 8/side)", cue: "Anti-extension deep abdominal brace" }
+        ]
+      },
+      thu: {
+        title: "Mid-Week Joint Rest & Mobility",
+        desc: "Allow arthritis inflammation to settle between lifting days.",
+        xpPerTask: 10,
+        bonusXp: 30,
+        tasks: [
+          { name: "Cat-Cow & Supine Glute Bridges (2 sets)", cue: "Gentle pelvic alignment and blood flow" },
+          { name: "15-Min Casual Stroll / Low-Impact Step Goal", cue: "Keep joints lubricated with synovial fluid" },
+          { name: "Gentle Hip Flexor Opening", cue: "Half-kneeling with upright spine" }
         ]
       },
       fri: {
-        title: "Spine-Spared Lower Body",
-        desc: "Build legs & glutes with zero spinal loading.",
+        title: "Gym: Spine-Spared Lower Body",
+        desc: "Strengthen legs and glutes with zero spinal compression.",
         xpPerTask: 15,
         bonusXp: 50,
         tasks: [
-          { name: "Warm-Up: Nerve Floss & Glute Bridges", cue: "Activate gluteus medius/maximus" },
-          { name: "Leg Press - High & Wide Feet (3 × 10-12)", cue: "Keep pelvis down; do not round tailbone" },
-          { name: "Seated or Lying Hamstring Curls (3 × 12-15)", cue: "Stabilizes knee and posterior pelvic tilt" },
-          { name: "Dumbbell Romanian Deadlifts (3 × 8-10)", cue: "Pure hip hinge; lower DBs to shin only" },
-          { name: "Cable / Band Glute Kickbacks (3 × 12-15/leg)", cue: "Squeeze top; no lower back hyperextension" },
+          { name: "Warm-Up: Nerve Floss & Glute Bridges", cue: "Wake up gluteus medius/maximus" },
+          { name: "Leg Press - High & Wide Feet (3 × 10–12)", cue: "Keep pelvis down; do not round tailbone" },
+          { name: "Seated or Lying Hamstring Curls (3 × 12–15)", cue: "Stabilizes knee and posterior pelvic tilt" },
+          { name: "Dumbbell Romanian Deadlifts (3 × 8–10)", cue: "Pure hip hinge; lower DBs to shin level only" },
+          { name: "Cable / Band Glute Kickbacks (3 × 12–15/leg)", cue: "Squeeze top; no lower back arching" },
           { name: "Banded Walks / Clamshells (2 × 15/side)", cue: "Strengthens SI joint stabilizers" }
         ]
       },
+      sat: {
+        title: "Weekend Rest & Decompression",
+        desc: "Rest day to recharge ahead of Sunday's pull workout.",
+        xpPerTask: 10,
+        bonusXp: 30,
+        tasks: [
+          { name: "5-Min Nerve Floss & Deep Belly Breathing", cue: "Relaxes pelvic floor and lumbar muscles" },
+          { name: "Outdoor Fresh Air / Gentle Mobility", cue: "Promotes parasympathetic recovery" }
+        ]
+      },
       sun: {
-        title: "Pull & Posterior Chain",
+        title: "Gym: Pull & Posterior Chain",
         desc: "Upper back strength, posture, and grip.",
         xpPerTask: 15,
         bonusXp: 50,
         tasks: [
           { name: "Warm-Up: Cat-Cow & Torso Rotations", cue: "Gentle mid-spine lubrication" },
-          { name: "Chest-Supported Row (3 × 10-12)", cue: "Pad supports torso completely" },
-          { name: "Lat Pulldowns - Neutral/Wide Grip (3 × 10-12)", cue: "Pull down to collarbone; stay upright" },
+          { name: "Chest-Supported Row (3 × 10–12)", cue: "Pad supports torso completely" },
+          { name: "Lat Pulldowns - Neutral/Wide Grip (3 × 10–12)", cue: "Pull down to collarbone; stay upright" },
           { name: "Cable Face Pulls (3 × 15)", cue: "Eye-level cable; targets rotator cuff" },
           { name: "Seated Incline Dumbbell Curls (3 × 12)", cue: "Spine fully rested against pad" },
           { name: "Farmer's Walks (3 × 35 paces)", cue: "Tall posture, strong abdominal brace" }
@@ -180,14 +248,14 @@
     };
 
     // --- STATE MANAGEMENT ---
-    let currentTab = 'wed';
+    let currentSelectedDay = 'wed';
     let calendarDate = new Date();
     let state = JSON.parse(localStorage.getItem('jointSafeQuestState')) || {
       xp: 0,
       level: 1,
       streak: 0,
       lastCompletedDate: null,
-      history: {}, // Format: "YYYY-MM-DD": ["Push & Core Stability"]
+      history: {},
       checks: {}
     };
 
@@ -197,21 +265,34 @@
       renderCalendar();
     }
 
-    // --- UI RENDERING ---
-    function switchTab(dayKey) {
-      currentTab = dayKey;
-      ['tue', 'wed', 'fri', 'sun'].forEach(d => {
+    // --- DAY SWITCHING & UI ---
+    function switchDay(dayKey) {
+      currentSelectedDay = dayKey;
+      const todayIndex = new Date().getDay();
+      const todayKey = daysMap[todayIndex];
+
+      ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].forEach(d => {
         const tabBtn = document.getElementById(`tab-${d}`);
         if (d === dayKey) {
-          tabBtn.className = "py-2 rounded-lg bg-emerald-600 text-white font-bold shadow";
+          tabBtn.className = "py-2 rounded-lg bg-emerald-600 text-white font-bold shadow flex flex-col items-center";
         } else {
-          tabBtn.className = "py-2 rounded-lg text-slate-400 hover:text-slate-200 font-semibold";
+          tabBtn.className = "py-2 rounded-lg text-slate-400 hover:text-slate-200 font-semibold flex flex-col items-center";
         }
       });
 
-      const workout = workouts[dayKey];
-      document.getElementById('quest-title').innerText = workout.title;
-      document.getElementById('quest-desc').innerText = workout.desc;
+      const dayData = weeklySchedule[dayKey];
+      document.getElementById('day-badge').innerText = fullDayNames[dayKey];
+      document.getElementById('quest-title').innerText = dayData.title;
+      document.getElementById('quest-desc').innerText = dayData.desc;
+
+      const todayIndicator = document.getElementById('today-indicator');
+      if (dayKey === todayKey) {
+        todayIndicator.classList.remove('hidden');
+      } else {
+        todayIndicator.classList.add('hidden');
+      }
+
+      document.getElementById('complete-btn-text').innerText = `Complete ${fullDayNames[dayKey]} Quest (+${dayData.bonusXp} XP)`;
 
       renderChecklist();
     }
@@ -219,10 +300,10 @@
     function renderChecklist() {
       const container = document.getElementById('checklist-container');
       container.innerHTML = '';
-      const workout = workouts[currentTab];
+      const dayData = weeklySchedule[currentSelectedDay];
 
-      workout.tasks.forEach((task, index) => {
-        const taskId = `${currentTab}_task_${index}`;
+      dayData.tasks.forEach((task, index) => {
+        const taskId = `${currentSelectedDay}_task_${index}`;
         const isChecked = !!state.checks[taskId];
 
         const card = document.createElement('div');
@@ -232,7 +313,7 @@
 
         card.innerHTML = `
           <input type="checkbox" id="${taskId}" ${isChecked ? 'checked' : ''} 
-            onchange="toggleTask('${taskId}', ${workout.xpPerTask})"
+            onchange="toggleTask('${taskId}', ${dayData.xpPerTask})"
             class="custom-checkbox mt-1 w-5 h-5 rounded border-slate-700 bg-slate-800 text-emerald-500 focus:ring-0 cursor-pointer" />
           <label for="${taskId}" class="flex-1 cursor-pointer">
             <div class="font-medium text-sm text-slate-100 ${isChecked ? 'line-through text-slate-400' : ''}">
@@ -261,12 +342,11 @@
       document.getElementById('next-level-xp').innerText = xpForNextLevel;
       document.getElementById('xp-bar').style.width = `${percent}%`;
 
-      // Update Rank Title
       const rankKey = Math.min(state.level, 5);
       document.getElementById('rank-title').innerText = rankTitles[rankKey] || "Resilience Legend";
     }
 
-    // --- GAMEPLAY & LEVELING MECHANICS ---
+    // --- GAMEPLAY MECHANICS ---
     function toggleTask(taskId, xpVal) {
       const isChecked = document.getElementById(taskId).checked;
       if (isChecked) {
@@ -293,26 +373,23 @@
     }
 
     function completeWorkout() {
-      const workout = workouts[currentTab];
-      const allChecked = workout.tasks.every((_, idx) => state.checks[`${currentTab}_task_${idx}`]);
+      const dayData = weeklySchedule[currentSelectedDay];
+      const allChecked = dayData.tasks.every((_, idx) => state.checks[`${currentSelectedDay}_task_${idx}`]);
 
       if (!allChecked) {
-        alert("Please check off all exercises in this quest before finishing!");
+        alert("Please check off all exercises in today's quest before completing!");
         return;
       }
 
-      // Record date in YYYY-MM-DD
       const now = new Date();
       const dateKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
       
       if (!state.history) state.history = {};
       if (!state.history[dateKey]) state.history[dateKey] = [];
 
-      // Avoid duplicate completions on the same day for streak
-      if (!state.history[dateKey].includes(workout.title)) {
-        state.history[dateKey].push(workout.title);
+      if (!state.history[dateKey].includes(dayData.title)) {
+        state.history[dateKey].push(dayData.title);
         
-        // Streak calculation
         const todayStr = now.toDateString();
         if (state.lastCompletedDate !== todayStr) {
           state.streak += 1;
@@ -320,15 +397,15 @@
         }
       }
 
-      addXP(workout.bonusXp);
+      addXP(dayData.bonusXp);
       saveState();
-      alert(`⚔️ Quest Completed!\n+${workout.bonusXp} Bonus XP awarded.\nSaved to your Quest Calendar!`);
+      alert(`⚔️ ${fullDayNames[currentSelectedDay]} Quest Completed!\n+${dayData.bonusXp} Bonus XP awarded.\nSaved to your Quest Calendar!`);
     }
 
     function resetDayChecklist() {
-      if (confirm(`Reset checklist for this workout tab?`)) {
-        workouts[currentTab].tasks.forEach((_, idx) => {
-          delete state.checks[`${currentTab}_task_${idx}`];
+      if (confirm(`Reset checklist for ${fullDayNames[currentSelectedDay]}?`)) {
+        weeklySchedule[currentSelectedDay].tasks.forEach((_, idx) => {
+          delete state.checks[`${currentSelectedDay}_task_${idx}`];
         });
         saveState();
         renderChecklist();
@@ -368,14 +445,12 @@
       const today = new Date();
       const isCurrentMonth = today.getFullYear() === year && today.getMonth() === month;
 
-      // Blank prefix cells
       for (let i = 0; i < firstDay; i++) {
         const emptyCell = document.createElement('div');
         emptyCell.className = "h-9 rounded-lg bg-slate-900/30";
         container.appendChild(emptyCell);
       }
 
-      // Day cells
       for (let day = 1; day <= daysInMonth; day++) {
         const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         const hasCompleted = state.history && state.history[dateKey] && state.history[dateKey].length > 0;
@@ -401,8 +476,9 @@
       }
     }
 
-    // Initialize
-    switchTab('wed');
+    // --- INITIALIZE TO TODAY'S DAY OF THE WEEK ---
+    const currentDayOfWeek = daysMap[new Date().getDay()];
+    switchDay(currentDayOfWeek);
     renderHeader();
   </script>
 </body>
