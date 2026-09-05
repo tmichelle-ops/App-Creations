@@ -3,81 +3,124 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Joint-Safe Fitness Quest</title>
+  <title>Hyrule Fitness Quest | Sheikah Slate</title>
 
-  <!-- OPTION B: Emoji App Icon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚔️</text></svg>">
+  <!-- Golden Triforce Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><polygon points=%2250,5 90,85 10,85%22 fill=%22%23eab308%22/><polygon points=%2250,85 30,45 70,45%22 fill=%22%23020617%22/></svg>">
 
-  <!-- Mobile web app meta tags -->
+  <!-- Mobile Web App Meta Tags -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Workout Quest" />
+  <meta name="apple-mobile-web-app-title" content="Sheikah Slate" />
 
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Rajdhani:wght@600;700&display=swap');
+    
     body {
+      font-family: 'Rajdhani', sans-serif;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
     }
+
+    .zelda-title {
+      font-family: 'Cinzel', serif;
+    }
+
+    /* Sheikah Slate Glowing Borders & HUD */
+    .sheikah-card {
+      background: radial-gradient(circle at 50% 0%, #0d1b2a 0%, #050b14 100%);
+      border: 1px solid rgba(0, 240, 255, 0.4);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.15), inset 0 0 15px rgba(0, 240, 255, 0.05);
+    }
+
+    .sheikah-active-tab {
+      background: linear-gradient(180deg, rgba(0, 240, 255, 0.25) 0%, rgba(0, 240, 255, 0.05) 100%);
+      border: 1px solid #00f0ff;
+      color: #00f0ff;
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+    }
+
     .custom-checkbox:checked {
-      background-color: #10b981;
-      border-color: #10b981;
+      background-color: #00f0ff;
+      border-color: #00f0ff;
+      box-shadow: 0 0 8px #00f0ff;
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen pb-20 font-sans antialiased select-none">
+<body class="bg-slate-950 text-slate-100 min-h-screen pb-24 selection:bg-cyan-500 selection:text-black">
 
   <!-- Main Container -->
   <main class="max-w-md mx-auto px-4 pt-4">
 
-    <!-- Top Navigation -->
-    <div class="flex items-center justify-between mb-3">
-      <a href="index.html" class="inline-flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-emerald-400 transition-colors">
-        &larr; Back to App Creations
+    <!-- Top Sheikah Bar -->
+    <div class="flex items-center justify-between mb-3 text-xs">
+      <a href="index.html" class="inline-flex items-center gap-1.5 font-bold text-cyan-400 hover:text-cyan-300 transition-colors uppercase tracking-widest">
+        <span>&larr;</span> Citadel Portal
       </a>
-      <button onclick="toggleCalendar()" class="text-xs font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-2.5 py-1 rounded-lg flex items-center gap-1">
-        📅 <span id="calendar-toggle-text">View Calendar</span>
+      <button onclick="toggleCalendar()" class="font-bold text-amber-400 bg-amber-950/40 border border-amber-500/50 px-3 py-1 rounded flex items-center gap-1.5 shadow-[0_0_8px_rgba(234,179,8,0.2)] tracking-wider">
+        <span>📜</span> <span id="calendar-toggle-text">Quest Log</span>
       </button>
     </div>
 
-    <!-- Header & Character Status -->
-    <header class="bg-slate-900 border border-slate-800 rounded-2xl p-5 mb-4 shadow-lg">
-      <div class="flex items-center justify-between mb-3">
+    <!-- Breath of the Wild Hero HUD Card -->
+    <header class="sheikah-card rounded-2xl p-5 mb-4 relative overflow-hidden">
+      <!-- Ancient Sheikah Background Sigil -->
+      <div class="absolute -right-8 -bottom-8 text-8xl text-cyan-500/5 pointer-events-none select-none font-serif">
+        👁️
+      </div>
+
+      <div class="flex items-start justify-between mb-3">
         <div>
-          <span id="rank-title" class="text-xs font-bold uppercase tracking-wider text-emerald-400">Spine Initiate</span>
-          <h1 class="text-2xl font-black text-white flex items-center gap-2">
-            Level <span id="level-display">1</span>
+          <div class="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-cyan-400">
+            <span>▲</span>
+            <span id="rank-title" class="zelda-title">Hylian Traveler</span>
+          </div>
+          <h1 class="text-3xl font-black text-white flex items-center gap-2 mt-0.5 tracking-wide">
+            Rank <span id="level-display" class="text-cyan-300">1</span>
           </h1>
         </div>
-        <div class="text-right">
-          <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Quest Streak</span>
-          <div class="text-xl font-black text-amber-300 flex items-center justify-end gap-1">
-            🔥 <span id="streak-display">0</span> <span class="text-sm font-normal text-slate-400">days</span>
+        
+        <!-- Rupees & Streak -->
+        <div class="text-right flex flex-col items-end">
+          <div class="flex items-center gap-1.5 text-sm font-black text-emerald-300 bg-emerald-950/70 px-2.5 py-0.5 rounded border border-emerald-500/50 mb-1 shadow-[0_0_8px_rgba(16,185,129,0.2)]">
+            <span>💎</span> <span id="rupee-display">0</span> <span class="text-[10px] uppercase font-bold text-emerald-400">Rupees</span>
+          </div>
+          <div class="text-xs font-bold text-amber-300 flex items-center gap-1">
+            🔥 <span id="streak-display">0</span> Day Streak
           </div>
         </div>
       </div>
 
-      <!-- XP Progress Bar -->
-      <div class="w-full bg-slate-800 h-3.5 rounded-full overflow-hidden mb-2 border border-slate-700/50">
-        <div id="xp-bar" class="bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 h-full w-0 transition-all duration-300"></div>
+      <!-- Hearts HUD (Increases with level) -->
+      <div class="flex items-center gap-1 mb-3 text-base text-rose-500 drop-shadow-[0_0_6px_rgba(244,63,94,0.6)]" id="hearts-container">
+        <span>❤️</span><span>❤️</span><span>❤️</span>
       </div>
-      <div class="flex justify-between text-xs text-slate-400">
-        <span>Total XP: <strong id="current-xp" class="text-slate-200">0</strong></span>
-        <span>Next Level: <strong id="next-level-xp" class="text-slate-200">100</strong> XP</span>
+
+      <!-- Stamina Wheel Spirit Orb Progress Bar -->
+      <div class="w-full bg-slate-900/90 h-3 rounded-full overflow-hidden mb-1.5 border border-cyan-500/40 p-[1px]">
+        <div id="xp-bar" class="bg-gradient-to-r from-teal-400 via-cyan-400 to-emerald-400 h-full w-0 transition-all duration-300 rounded-full shadow-[0_0_8px_rgba(0,240,255,0.7)]"></div>
+      </div>
+      <div class="flex justify-between text-[11px] font-bold text-slate-400 tracking-wider">
+        <span>Spirit XP: <strong id="current-xp" class="text-cyan-300">0</strong></span>
+        <span>Next Milestone: <strong id="next-level-xp" class="text-slate-200">600</strong> XP</span>
       </div>
     </header>
 
-    <!-- CALENDAR DRAWER (Collapsible) -->
-    <section id="calendar-drawer" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-4 mb-5 shadow-lg">
-      <div class="flex items-center justify-between mb-3">
-        <button onclick="changeMonth(-1)" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold">&larr; Prev</button>
-        <h3 id="calendar-month-year" class="text-sm font-bold text-white">Month 2026</h3>
-        <button onclick="changeMonth(1)" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold">Next &rarr;</button>
+    <!-- SHEIKAH SLATE QUEST LOG (Collapsible Calendar) -->
+    <section id="calendar-drawer" class="hidden bg-slate-900/95 border-2 border-cyan-500/60 rounded-2xl p-4 mb-4 shadow-[0_0_15px_rgba(0,240,255,0.2)]">
+      <div class="flex items-center justify-between mb-3 border-b border-cyan-800/40 pb-2">
+        <button onclick="changeMonth(-1)" class="px-2.5 py-1 rounded bg-slate-800 border border-cyan-800 text-cyan-300 text-xs font-bold hover:bg-slate-700">&larr;</button>
+        <div class="text-center">
+          <div class="text-[9px] uppercase tracking-widest text-cyan-400 font-bold">Sheikah Slate Records</div>
+          <h3 id="calendar-month-year" class="text-sm font-black text-white">Month 2026</h3>
+        </div>
+        <button onclick="changeMonth(1)" class="px-2.5 py-1 rounded bg-slate-800 border border-cyan-800 text-cyan-300 text-xs font-bold hover:bg-slate-700">&rarr;</button>
       </div>
 
       <!-- Calendar Grid Headers -->
-      <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-slate-500 mb-1">
+      <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-black text-cyan-400/80 mb-1">
         <div>SUN</div><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div>
       </div>
 
@@ -85,16 +128,16 @@
       <div id="calendar-days" class="grid grid-cols-7 gap-1 text-xs"></div>
 
       <!-- Legend -->
-      <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-around text-[10px] text-slate-400">
-        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Completed</span>
-        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full border border-cyan-400"></span> Today</span>
+      <div class="mt-3 pt-2.5 border-t border-cyan-900/50 flex items-center justify-around text-[10px] text-slate-300 font-medium">
+        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_4px_#00f0ff]"></span> Cleared</span>
+        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full border border-amber-400 bg-amber-950"></span> Today</span>
       </div>
     </section>
 
-    <!-- 7-DAY WEEK SELECTOR -->
-    <nav class="grid grid-cols-7 gap-1 bg-slate-900 p-1.5 rounded-xl mb-4 border border-slate-800 text-[11px] font-bold text-center">
+    <!-- 7-DAY HYRULE MAP NAVIGATION -->
+    <nav class="grid grid-cols-7 gap-1 bg-slate-900/90 p-1.5 rounded-xl mb-4 border border-cyan-900/40 text-[11px] font-bold text-center">
       <button onclick="switchDay('mon')" id="tab-mon" class="py-2 rounded-lg transition-all flex flex-col items-center">
-        <span>Mon</span><span class="text-[9px] opacity-70 font-normal">Rest</span>
+        <span>Mon</span><span class="text-[9px] opacity-70 font-normal">VR</span>
       </button>
       <button onclick="switchDay('tue')" id="tab-tue" class="py-2 rounded-lg transition-all flex flex-col items-center">
         <span>Tue</span><span class="text-[9px] opacity-70 font-normal">Hike</span>
@@ -103,7 +146,7 @@
         <span>Wed</span><span class="text-[9px] opacity-70 font-normal">Push</span>
       </button>
       <button onclick="switchDay('thu')" id="tab-thu" class="py-2 rounded-lg transition-all flex flex-col items-center">
-        <span>Thu</span><span class="text-[9px] opacity-70 font-normal">Rest</span>
+        <span>Thu</span><span class="text-[9px] opacity-70 font-normal">Play</span>
       </button>
       <button onclick="switchDay('fri')" id="tab-fri" class="py-2 rounded-lg transition-all flex flex-col items-center">
         <span>Fri</span><span class="text-[9px] opacity-70 font-normal">Legs</span>
@@ -116,45 +159,73 @@
       </button>
     </nav>
 
-    <!-- Active Day Banner & Quest Title -->
-    <section class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-4 mb-4">
+    <!-- Active Quest Header Banner -->
+    <section class="bg-gradient-to-b from-slate-900 to-slate-950 border border-cyan-500/30 rounded-2xl p-4 mb-4 shadow-sm relative">
       <div class="flex items-center justify-between mb-2">
         <div class="flex items-center gap-2">
-          <span id="day-badge" class="px-2 py-0.5 text-[10px] font-black uppercase rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-            Wednesday
+          <span id="day-badge" class="px-2.5 py-0.5 text-[10px] font-black uppercase rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 tracking-wider">
+            Wednesday Shrine
           </span>
-          <span id="today-indicator" class="hidden px-2 py-0.5 text-[10px] font-black uppercase rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 animate-pulse">
-            Today
+          <span id="today-indicator" class="hidden px-2 py-0.5 text-[10px] font-black uppercase rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 animate-pulse">
+            Active Now
           </span>
         </div>
-        <button onclick="resetDayChecklist()" class="text-xs text-slate-500 hover:text-rose-400 underline transition">
-          Reset Tasks
+        <button onclick="resetDayChecklist()" class="text-[11px] text-cyan-400/60 hover:text-rose-400 underline transition">
+          Reset Trials
         </button>
       </div>
-      <h2 id="quest-title" class="text-lg font-bold text-white">Workout Title</h2>
-      <p id="quest-desc" class="text-xs text-slate-400 mt-0.5">Joint-safe & spine-spared routine</p>
+      <h2 id="quest-title" class="text-lg font-black text-white tracking-wide">Daily Quest Title</h2>
+      <p id="quest-desc" class="text-xs text-slate-400 mt-0.5">Spine-spared trial guidelines</p>
     </section>
 
     <!-- Checklist Container -->
     <section id="checklist-container" class="space-y-3 mb-6"></section>
 
     <!-- Complete Workout Button -->
-    <button id="complete-btn" onclick="completeWorkout()" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] text-white font-bold rounded-xl shadow-lg transition duration-150 flex items-center justify-center gap-2">
-      <span id="complete-btn-text">Complete Daily Quest (+50 Bonus XP)</span>
+    <button id="complete-btn" onclick="completeWorkout()" class="w-full py-4 bg-gradient-to-r from-cyan-600 via-teal-500 to-cyan-600 hover:from-cyan-500 hover:to-teal-400 active:scale-[0.98] text-slate-950 font-black tracking-wider uppercase rounded-xl shadow-[0_0_15px_rgba(0,240,255,0.4)] transition duration-150 flex items-center justify-center gap-2">
+      <span id="complete-btn-text">Clear Daily Shrine (+50 Spirit XP)</span>
     </button>
 
   </main>
 
   <!-- JavaScript Logic -->
   <script>
-    // --- RANK TITLES FOR LEVELING UP ---
+    // --- 6-MONTH PROGRESSIVE XP CURVE & BOTW TITLES ---
     const rankTitles = {
-      1: "Spine Initiate",
-      2: "Core Defender",
-      3: "Joint Guardian",
-      4: "Mobility Vanguard",
-      5: "Resilience Master"
+      1: "Hylian Traveler",
+      2: "Kokiri Scout",
+      3: "Goron Pillar",
+      4: "Zora Champion",
+      5: "Sheikah Guardian",
+      6: "Knight of the Realm",
+      7: "Master of the Wild",
+      8: "Hero of Hyrule"
     };
+
+    const levelThresholds = [0, 0, 600, 1800, 3600, 6000, 9000, 12500, 16500];
+
+    function calculateLevelData(xp) {
+      let level = 1;
+      for (let i = 1; i < levelThresholds.length; i++) {
+        if (xp >= levelThresholds[i]) {
+          level = i;
+        } else {
+          break;
+        }
+      }
+
+      const currentFloor = levelThresholds[level];
+      const nextCeiling = levelThresholds[level + 1] || currentFloor + 4000;
+      const xpIntoCurrentLevel = xp - currentFloor;
+      const xpNeededForLevel = nextCeiling - currentFloor;
+      const progressPercent = Math.min(Math.max((xpIntoCurrentLevel / xpNeededForLevel) * 100, 0), 100);
+
+      return {
+        level,
+        nextCeiling,
+        progressPercent
+      };
+    }
 
     const daysMap = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
     const fullDayNames = {
@@ -167,91 +238,98 @@
       sun: "Sunday"
     };
 
-    // --- SCHEDULED ROUTINES BY DAY ---
+    // --- 100% SPINE-SAFE ALL-MACHINE SCHEDULE ---
     const weeklySchedule = {
       mon: {
-        title: "Active Recovery & Decompression",
-        desc: "Spine decompression and light mobility to prepare for the week.",
-        xpPerTask: 10,
-        bonusXp: 30,
+        title: "Trial of the Virtual Arena (Home VR)",
+        desc: "High-energy VR boxing or cardio studio shrine (FitXR / Les Mills).",
+        xpPerTask: 15,
+        bonusXp: 40,
+        bonusRupees: 30,
         tasks: [
-          { name: "5-Min Gentle Sciatic Nerve Flossing", cue: "Seated nerve glides, smooth and pain-free" },
-          { name: "Light 15-Min Walk or Gentle Mobility", cue: "Increases circulation without joint friction" },
-          { name: "Hydration & Anti-Inflammatory Check", cue: "Supports connective tissue recovery" }
+          { name: "5-Min Nerve Floss & Sheikah Mobility", cue: "Glides sciatic nerve and warms mid-back before combat" },
+          { name: "25–30 Min VR Boxing Studio Trial", cue: "Pivot on balls of feet; maintain upright torso; avoid jarring spinal twists" },
+          { name: "Decompression: Arm, Shoulder & Calf Relief", cue: "Gentle upright stretching, deep diaphragmatic breathing" }
         ]
       },
       tue: {
-        title: "Nature Trail Cardio Hike",
-        desc: "Low-impact zone 2 cardio on packed-dirt trails.",
+        title: "Expedition to Hyrule Ridge (Cardio Hike)",
+        desc: "Scenic trail hike; low-impact aerobic endurance on nature dirt paths.",
         xpPerTask: 20,
         bonusXp: 50,
+        bonusRupees: 50,
         tasks: [
-          { name: "5-Min Nerve Floss & Mobility Warm-Up", cue: "Preps L5-S1 nerve root before walking" },
-          { name: "Nature Trail Hike (45–60 min)", cue: "Soft dirt path, shorter strides, glute drive" },
-          { name: "Post-Hike Calf & Quad Gentle Stretch", cue: "Avoid bending forward at waist" }
+          { name: "5-Min Nerve Floss & Pelvic Alignment", cue: "Preps L5-S1 nerve root before hitting dirt trails" },
+          { name: "Scenic Nature Trail Hike (45–60 min)", cue: "Soft dirt path, shorter strides, powerful glute push-off" },
+          { name: "Post-Hike Calf & Quad Gentle Stretch", cue: "Keep spine tall; avoid rounding lower back" }
         ]
       },
       wed: {
-        title: "Gym: Push & Core Stability",
-        desc: "Chest support to eliminate lumbar shear force.",
+        title: "Goron Forge: Shield & Push (All-Machine)",
+        desc: "Chest, shoulders & triceps with full backrest support.",
         xpPerTask: 15,
         bonusXp: 50,
+        bonusRupees: 40,
         tasks: [
-          { name: "Warm-Up: Cat-Cow, Nerve Floss, Bird-Dogs", cue: "Mid-back mobility and core bracing" },
-          { name: "Seated Chest Press Machine (3 × 10–12)", cue: "Back fully supported against backrest" },
-          { name: "30° Incline DB Bench Press (3 × 10–12)", cue: "Ribcage pinned; no lumbar hyperextension" },
-          { name: "Seated DB Lateral Raises (3 × 12–15)", cue: "Sitting removes lower-back sway" },
-          { name: "Cable Rope Triceps Pushdowns (3 × 12–15)", cue: "Smooth constant tension on elbow joints" },
-          { name: "Dead Bugs or Bird-Dogs (3 × 8/side)", cue: "Anti-extension deep abdominal brace" }
+          { name: "Shrine Warm-Up: Cat-Cow & Torso Mobility", cue: "Lubricates mid-back without lumbar hyperextension" },
+          { name: "Seated Chest Press Machine (3 × 10–12)", cue: "Back fully flat against backrest; adjust handles to mid-chest" },
+          { name: "Incline Chest Press Machine (3 × 10–12)", cue: "Back supported; use foot assist pedal to protect shoulders" },
+          { name: "Machine Lateral Raise (Deltoid) (3 × 12–15)", cue: "Padded arm rests guide movement; eliminates neck shrugging" },
+          { name: "Cable Rope Triceps Pushdowns (3 × 12–15)", cue: "Pin elbows to sides; smooth constant tension on tendons" },
+          { name: "Seated Cable Pallof Press (3 × 10/side)", cue: "Sit upright against backrest; press cable out to lock core" }
         ]
       },
       thu: {
-        title: "Mid-Week Joint Rest & Mobility",
-        desc: "Allow arthritis inflammation to settle between lifting days.",
+        title: "Korok Forest Sanctuary (Active Play & Recovery)",
+        desc: "Muscle repair, joint relief, gentle mobility or light Nex Playground.",
         xpPerTask: 10,
         bonusXp: 30,
+        bonusRupees: 25,
         tasks: [
-          { name: "Cat-Cow & Supine Glute Bridges (2 sets)", cue: "Gentle pelvic alignment and blood flow" },
-          { name: "15-Min Casual Stroll / Low-Impact Step Goal", cue: "Keep joints lubricated with synovial fluid" },
-          { name: "Gentle Hip Flexor Opening", cue: "Half-kneeling with upright spine" }
+          { name: "Seated Sciatic Nerve Flossing & Cat-Cow", cue: "Relieves joint stiffness without spinal compression" },
+          { name: "Nex Playground Active Session (or Gentle Walk)", cue: "Light, low-impact interactive play to keep joints lubricated" },
+          { name: "Recovery Elixir: Hydration & Connective Stretch", cue: "Eases arthritis inflammation and restores elasticity" }
         ]
       },
       fri: {
-        title: "Gym: Spine-Spared Lower Body",
-        desc: "Strengthen legs and glutes with zero spinal compression.",
+        title: "Zora Waterfall: Pillar & Leg (All-Machine)",
+        desc: "Lower-body power for quads, hamstrings & glutes with zero spinal loading.",
         xpPerTask: 15,
         bonusXp: 50,
+        bonusRupees: 40,
         tasks: [
-          { name: "Warm-Up: Nerve Floss & Glute Bridges", cue: "Wake up gluteus medius/maximus" },
-          { name: "Leg Press - High & Wide Feet (3 × 10–12)", cue: "Keep pelvis down; do not round tailbone" },
-          { name: "Seated or Lying Hamstring Curls (3 × 12–15)", cue: "Stabilizes knee and posterior pelvic tilt" },
-          { name: "Dumbbell Romanian Deadlifts (3 × 8–10)", cue: "Pure hip hinge; lower DBs to shin level only" },
-          { name: "Cable / Band Glute Kickbacks (3 × 12–15/leg)", cue: "Squeeze top; no lower back arching" },
-          { name: "Banded Walks / Clamshells (2 × 15/side)", cue: "Strengthens SI joint stabilizers" }
+          { name: "Warm-Up: Nerve Floss & Seated Leg Swings", cue: "Activates glute stabilizers and hip lubricators" },
+          { name: "Leg Press - High & Wide Feet (3 × 10–12)", cue: "Keep tailbone glued down; never round lower back" },
+          { name: "Seated or Lying Hamstring Curls (3 × 12–15)", cue: "Align knees with pivot point; stabilizes posterior pelvis" },
+          { name: "Glute Kickback Machine (3 × 12–15/leg)", cue: "Padded chest rest locks spine; squeeze glute at peak" },
+          { name: "Seated Hip Abductor Machine (3 × 15)", cue: "Push outward against pads; strengthens SI-joint stabilizers" },
+          { name: "Leg Press Calf Extensions (3 × 15)", cue: "Drive through balls of feet; controlled ankle strength" }
         ]
       },
       sat: {
-        title: "Weekend Rest & Decompression",
-        desc: "Rest day to recharge ahead of Sunday's pull workout.",
+        title: "Rest at the Lakeside Stable",
+        desc: "Full rest and recovery to prepare for Sunday's pull quest.",
         xpPerTask: 10,
         bonusXp: 30,
+        bonusRupees: 20,
         tasks: [
-          { name: "5-Min Nerve Floss & Deep Belly Breathing", cue: "Relaxes pelvic floor and lumbar muscles" },
-          { name: "Outdoor Fresh Air / Gentle Mobility", cue: "Promotes parasympathetic recovery" }
+          { name: "5-Min Nerve Floss & Deep Belly Breathing", cue: "Calms nervous system and relaxes lumbar stabilizers" },
+          { name: "Gentle Casual Movement / Hyrule Stroll", cue: "Promotes parasympathetic recovery" }
         ]
       },
       sun: {
-        title: "Gym: Pull & Posterior Chain",
-        desc: "Upper back strength, posture, and grip.",
+        title: "Citadel Armory: Pull & Posterior (All-Machine)",
+        desc: "Back, rear shoulders, and biceps with torso-supported machine stabilization.",
         xpPerTask: 15,
         bonusXp: 50,
+        bonusRupees: 40,
         tasks: [
-          { name: "Warm-Up: Cat-Cow & Torso Rotations", cue: "Gentle mid-spine lubrication" },
-          { name: "Chest-Supported Row (3 × 10–12)", cue: "Pad supports torso completely" },
-          { name: "Lat Pulldowns - Neutral/Wide Grip (3 × 10–12)", cue: "Pull down to collarbone; stay upright" },
-          { name: "Cable Face Pulls (3 × 15)", cue: "Eye-level cable; targets rotator cuff" },
-          { name: "Seated Incline Dumbbell Curls (3 × 12)", cue: "Spine fully rested against pad" },
-          { name: "Farmer's Walks (3 × 35 paces)", cue: "Tall posture, strong abdominal brace" }
+          { name: "Warm-Up: Seated Sciatic Floss & Shoulder Circles", cue: "Upper spine and nerve lubrication" },
+          { name: "Seated Chest-Supported Row Machine (3 × 10–12)", cue: "Chest pad absorbs torso weight; zero lumbar strain" },
+          { name: "Lat Pulldowns - Neutral/Wide Grip (3 × 10–12)", cue: "Pull down to collarbone; keep spine tall and upright" },
+          { name: "Cable Face Pulls (3 × 15)", cue: "Cable set at eye level; strengthens upper back & rotator cuff" },
+          { name: "Preacher Curl Machine (or Cable Curls) (3 × 12)", cue: "Fixed pivot arm eliminates body swing or back arching" },
+          { name: "Seated Cable High-to-Low Woodchopper (3 × 10/side)", cue: "Anti-rotation rotational core brace with upright spine" }
         ]
       }
     };
@@ -259,17 +337,19 @@
     // --- STATE MANAGEMENT ---
     let currentSelectedDay = 'wed';
     let calendarDate = new Date();
-    let state = JSON.parse(localStorage.getItem('jointSafeQuestState')) || {
+    let state = JSON.parse(localStorage.getItem('hyruleQuestState')) || {
       xp: 0,
       level: 1,
       streak: 0,
+      rupees: 0,
+      hearts: 3,
       lastCompletedDate: null,
       history: {},
       checks: {}
     };
 
     function saveState() {
-      localStorage.setItem('jointSafeQuestState', JSON.stringify(state));
+      localStorage.setItem('hyruleQuestState', JSON.stringify(state));
       renderHeader();
       renderCalendar();
     }
@@ -283,14 +363,14 @@
       ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].forEach(d => {
         const tabBtn = document.getElementById(`tab-${d}`);
         if (d === dayKey) {
-          tabBtn.className = "py-2 rounded-lg bg-emerald-600 text-white font-bold shadow flex flex-col items-center";
+          tabBtn.className = "py-2 rounded-lg sheikah-active-tab font-black flex flex-col items-center";
         } else {
-          tabBtn.className = "py-2 rounded-lg text-slate-400 hover:text-slate-200 font-semibold flex flex-col items-center";
+          tabBtn.className = "py-2 rounded-lg text-slate-400 hover:text-cyan-200 font-semibold flex flex-col items-center";
         }
       });
 
       const dayData = weeklySchedule[dayKey];
-      document.getElementById('day-badge').innerText = fullDayNames[dayKey];
+      document.getElementById('day-badge').innerText = `${fullDayNames[dayKey]} Trial`;
       document.getElementById('quest-title').innerText = dayData.title;
       document.getElementById('quest-desc').innerText = dayData.desc;
 
@@ -301,7 +381,7 @@
         todayIndicator.classList.add('hidden');
       }
 
-      document.getElementById('complete-btn-text').innerText = `Complete ${fullDayNames[dayKey]} Quest (+${dayData.bonusXp} XP)`;
+      document.getElementById('complete-btn-text').innerText = `Clear ${fullDayNames[dayKey]} Shrine (+${dayData.bonusXp} Spirit XP)`;
 
       renderChecklist();
     }
@@ -317,15 +397,17 @@
 
         const card = document.createElement('div');
         card.className = `flex items-start gap-3 p-3.5 rounded-xl border transition-all ${
-          isChecked ? 'bg-slate-900/40 border-emerald-500/30' : 'bg-slate-900 border-slate-800'
+          isChecked 
+            ? 'bg-cyan-950/20 border-cyan-500/40 shadow-[0_0_8px_rgba(0,240,255,0.15)]' 
+            : 'bg-slate-900/80 border-slate-800 hover:border-slate-700'
         }`;
 
         card.innerHTML = `
           <input type="checkbox" id="${taskId}" ${isChecked ? 'checked' : ''} 
             onchange="toggleTask('${taskId}', ${dayData.xpPerTask})"
-            class="custom-checkbox mt-1 w-5 h-5 rounded border-slate-700 bg-slate-800 text-emerald-500 focus:ring-0 cursor-pointer" />
+            class="custom-checkbox mt-1 w-5 h-5 rounded border-cyan-800 bg-slate-800 text-cyan-500 focus:ring-0 cursor-pointer" />
           <label for="${taskId}" class="flex-1 cursor-pointer">
-            <div class="font-medium text-sm text-slate-100 ${isChecked ? 'line-through text-slate-400' : ''}">
+            <div class="font-bold text-sm ${isChecked ? 'line-through text-cyan-400/50' : 'text-slate-100'}">
               ${task.name}
             </div>
             <div class="text-xs text-slate-400 mt-0.5">${task.cue}</div>
@@ -336,23 +418,24 @@
     }
 
     function renderHeader() {
-      const xpPerLevel = 100;
-      const calculatedLevel = Math.floor(state.xp / xpPerLevel) + 1;
-      state.level = calculatedLevel;
-
-      const xpForNextLevel = state.level * xpPerLevel;
-      const currentLevelBaseXP = (state.level - 1) * xpPerLevel;
-      const progressXP = state.xp - currentLevelBaseXP;
-      const percent = Math.min(Math.max((progressXP / xpPerLevel) * 100, 0), 100);
+      const data = calculateLevelData(state.xp);
+      state.level = data.level;
 
       document.getElementById('level-display').innerText = state.level;
       document.getElementById('streak-display').innerText = state.streak;
+      document.getElementById('rupee-display').innerText = state.rupees || 0;
       document.getElementById('current-xp').innerText = state.xp;
-      document.getElementById('next-level-xp').innerText = xpForNextLevel;
-      document.getElementById('xp-bar').style.width = `${percent}%`;
+      document.getElementById('next-level-xp').innerText = data.nextCeiling;
+      document.getElementById('xp-bar').style.width = `${data.progressPercent}%`;
 
-      const rankKey = Math.min(state.level, 5);
-      document.getElementById('rank-title').innerText = rankTitles[rankKey] || "Resilience Legend";
+      // Rank Title
+      const rankKey = Math.min(state.level, 8);
+      document.getElementById('rank-title').innerText = rankTitles[rankKey] || "Hero of Hyrule";
+
+      // Heart Containers HUD (Gains hearts as you level up)
+      const heartCount = Math.min(3 + Math.floor(state.level / 2), 10);
+      const heartsContainer = document.getElementById('hearts-container');
+      heartsContainer.innerHTML = '❤️'.repeat(heartCount);
     }
 
     // --- GAMEPLAY MECHANICS ---
@@ -361,22 +444,24 @@
       if (isChecked) {
         state.checks[taskId] = true;
         addXP(xpVal);
+        state.rupees = (state.rupees || 0) + 5;
       } else {
         delete state.checks[taskId];
         addXP(-xpVal);
+        state.rupees = Math.max(0, (state.rupees || 0) - 5);
       }
       saveState();
       renderChecklist();
     }
 
     function addXP(amount) {
-      const oldLevel = Math.floor(state.xp / 100) + 1;
+      const oldData = calculateLevelData(state.xp);
       state.xp = Math.max(0, state.xp + amount);
-      const newLevel = Math.floor(state.xp / 100) + 1;
+      const newData = calculateLevelData(state.xp);
 
-      if (newLevel > oldLevel) {
-        const newTitle = rankTitles[Math.min(newLevel, 5)] || "Resilience Legend";
-        alert(`🎉 LEVEL UP! You reached Level ${newLevel}!\nNew Title: [${newTitle}]\nJoint & spine resilience +10!`);
+      if (newData.level > oldData.level) {
+        const newTitle = rankTitles[Math.min(newData.level, 8)] || "Hero of Hyrule";
+        alert(`🗡️ TRIAL MILESTONE CLEARED!\nYou ascended to Rank ${newData.level}: [${newTitle}]!\nHeart Container Acquired! ❤️`);
       }
       saveState();
     }
@@ -386,7 +471,7 @@
       const allChecked = dayData.tasks.every((_, idx) => state.checks[`${currentSelectedDay}_task_${idx}`]);
 
       if (!allChecked) {
-        alert("Please check off all exercises in today's quest before completing!");
+        alert("Hero, you must clear all trial tasks before claiming this Shrine's Spirit Orb!");
         return;
       }
 
@@ -407,12 +492,13 @@
       }
 
       addXP(dayData.bonusXp);
+      state.rupees = (state.rupees || 0) + (dayData.bonusRupees || 30);
       saveState();
-      alert(`⚔️ ${fullDayNames[currentSelectedDay]} Quest Completed!\n+${dayData.bonusXp} Bonus XP awarded.\nSaved to your Quest Calendar!`);
+      alert(`✨ SHRINE CLEARED!\n+${dayData.bonusXp} Spirit Power awarded.\n+${dayData.bonusRupees} Rupees added to pouch!\nRecorded in your Sheikah Slate.`);
     }
 
     function resetDayChecklist() {
-      if (confirm(`Reset checklist for ${fullDayNames[currentSelectedDay]}?`)) {
+      if (confirm(`Reset trials for ${fullDayNames[currentSelectedDay]}?`)) {
         weeklySchedule[currentSelectedDay].tasks.forEach((_, idx) => {
           delete state.checks[`${currentSelectedDay}_task_${idx}`];
         });
@@ -421,17 +507,17 @@
       }
     }
 
-    // --- CALENDAR LOGIC ---
+    // --- SHEIKAH SLATE CALENDAR ---
     function toggleCalendar() {
       const drawer = document.getElementById('calendar-drawer');
       const text = document.getElementById('calendar-toggle-text');
       if (drawer.classList.contains('hidden')) {
         drawer.classList.remove('hidden');
-        text.innerText = "Hide Calendar";
+        text.innerText = "Close Slate";
         renderCalendar();
       } else {
         drawer.classList.add('hidden');
-        text.innerText = "View Calendar";
+        text.innerText = "Quest Log";
       }
     }
 
@@ -466,26 +552,26 @@
         const isToday = isCurrentMonth && today.getDate() === day;
 
         const cell = document.createElement('div');
-        cell.className = `h-9 flex flex-col items-center justify-center rounded-lg border text-xs font-semibold transition-all relative ${
+        cell.className = `h-9 flex flex-col items-center justify-center rounded-lg border text-xs font-bold transition-all relative ${
           hasCompleted 
-            ? 'bg-emerald-950/70 border-emerald-500/80 text-emerald-300 shadow-sm' 
-            : 'bg-slate-800/60 border-slate-700/50 text-slate-400'
-        } ${isToday ? 'border-cyan-400 ring-1 ring-cyan-400/40 text-cyan-200' : ''}`;
+            ? 'bg-cyan-950/70 border-cyan-400 text-cyan-300 shadow-[0_0_8px_rgba(0,240,255,0.4)]' 
+            : 'bg-slate-900/70 border-slate-800 text-slate-400'
+        } ${isToday ? 'border-amber-400 ring-1 ring-amber-400/50 text-amber-200' : ''}`;
 
         cell.innerHTML = `
           <span>${day}</span>
-          ${hasCompleted ? `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-0.5"></span>` : ''}
+          ${hasCompleted ? `<span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_4px_#00f0ff] mt-0.5"></span>` : ''}
         `;
 
         if (hasCompleted) {
-          cell.title = `Completed: ${state.history[dateKey].join(', ')}`;
+          cell.title = `Cleared: ${state.history[dateKey].join(', ')}`;
         }
 
         container.appendChild(cell);
       }
     }
 
-    // --- INITIALIZE TO TODAY'S DAY OF THE WEEK ---
+    // --- INITIALIZE TO CURRENT DAY OF THE WEEK ---
     const currentDayOfWeek = daysMap[new Date().getDay()];
     switchDay(currentDayOfWeek);
     renderHeader();
