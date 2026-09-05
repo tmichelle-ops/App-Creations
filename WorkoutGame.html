@@ -57,14 +57,10 @@
   <header class="w-full max-w-6xl mx-auto px-4 pt-3 pb-2 border-b border-slate-800/80">
     <div class="flex items-start justify-between">
       
-      <!-- Top Left: BOTW Double-Row Hearts -->
+      <!-- Top Left: 3 Base Hearts HUD -->
       <div>
-        <div id="hearts-row-1" class="flex items-center gap-0.5 text-rose-500 text-xs drop-shadow-[0_0_4px_rgba(244,63,94,0.7)]">
-          <span>❤️</span><span>❤️</span><span>❤️</span><span>❤️</span><span>❤️</span>
-          <span>❤️</span><span>❤️</span><span>❤️</span><span>❤️</span><span>❤️</span>
-        </div>
-        <div id="hearts-row-2" class="flex items-center gap-0.5 text-rose-500 text-xs drop-shadow-[0_0_4px_rgba(244,63,94,0.7)] mt-0.5">
-          <span>❤️</span><span>❤️</span><span>❤️</span><span>❤️</span><span>❤️</span>
+        <div id="hearts-container" class="flex items-center gap-1 text-rose-500 text-sm drop-shadow-[0_0_6px_rgba(244,63,94,0.7)]">
+          <span>❤️</span><span>❤️</span><span>❤️</span>
         </div>
         <div class="text-[10px] font-bold tracking-widest text-cyan-400 mt-1 uppercase">
           Rank <span id="level-display" class="text-white text-xs">1</span> &bull; <span id="rank-title" class="zelda-serif">Hylian Traveler</span>
@@ -131,7 +127,7 @@
       </div>
 
       <div id="quest-list" class="space-y-2">
-        <!-- Rendered dynamically by JavaScript with your uploaded artwork -->
+        <!-- Rendered dynamically by JavaScript -->
       </div>
     </section>
 
@@ -146,14 +142,13 @@
       />
 
       <div>
-        <!-- Quest Subheader Bar -->
+        <!-- Quest Subheader Bar (Cleaned of red symbols) -->
         <div class="flex items-center justify-between border-b border-slate-700/60 pb-3 mb-4">
           <div>
             <h2 id="quest-title" class="zelda-serif text-xl sm:text-2xl font-black text-white tracking-wide">
               Quest Title
             </h2>
             <div class="flex items-center gap-2 mt-1">
-              <span class="text-xs font-black text-rose-500">! ???</span>
               <span id="quest-location" class="text-xs font-semibold text-amber-300">Location Tag</span>
             </div>
           </div>
@@ -211,7 +206,7 @@
 
   <!-- JavaScript Logic -->
   <script>
-    // --- 6-MONTH PROGRESSIVE XP CURVE & BOTW TITLES ---
+    // --- 6-MONTH PROGRESSIVE XP CURVE & TITLES ---
     const rankTitles = {
       1: "Hylian Traveler",
       2: "Kokiri Scout",
@@ -259,12 +254,12 @@
       sun: "Sunday"
     };
 
-    // --- 7-DAY BOTW ADVENTURE LOG SCHEDULE ---
+    // --- 7-DAY TITLES CLEANED (NO 'EX') ---
     const weeklySchedule = {
       mon: {
-        shortName: "EX Trial of Virtual Combat",
+        shortName: "Trial of Virtual Combat",
         location: "Oculus Shrine Chamber",
-        title: "EX Trial of the Virtual Arena (Home VR)",
+        title: "Trial of the Virtual Arena (Home VR)",
         desc: "You entered the digital trial chamber to face high-intensity combat without spinal compression. Complete your studio boxing conditioning round.",
         xpPerTask: 15,
         bonusXp: 40,
@@ -276,9 +271,9 @@
         ]
       },
       tue: {
-        shortName: "EX Expedition to Hyrule Ridge",
+        shortName: "Expedition to Hyrule Ridge",
         location: "Hyrule Ridge Trails",
-        title: "EX Expedition to Hyrule Ridge (Cardio Hike)",
+        title: "Expedition to Hyrule Ridge (Cardio Hike)",
         desc: "A long trek through the natural wilds of Hyrule. Low-impact aerobic conditioning on flat, packed-dirt terrain protects your joints.",
         xpPerTask: 20,
         bonusXp: 50,
@@ -290,9 +285,9 @@
         ]
       },
       wed: {
-        shortName: "EX Goron Shield: Push Quest",
+        shortName: "Goron Shield: Push Quest",
         location: "LA Fitness Forge",
-        title: "EX Goron Forge: Push & Core (All-Machine)",
+        title: "Goron Forge: Push & Core (All-Machine)",
         desc: "Harness the durability of the Gorons. Torso-supported machine pressing shields the lumbar spine from axial shear force.",
         xpPerTask: 15,
         bonusXp: 50,
@@ -307,9 +302,9 @@
         ]
       },
       thu: {
-        shortName: "EX Korok Forest Sanctuary",
+        shortName: "Korok Forest Sanctuary",
         location: "Lost Woods Pavilion",
-        title: "EX Korok Forest Sanctuary (Active Play)",
+        title: "Korok Forest Sanctuary (Active Play)",
         desc: "Rest your armor in the restorative glade. Engage in gentle movement and interactive play on the Nex Playground to dissipate inflammation.",
         xpPerTask: 10,
         bonusXp: 30,
@@ -321,9 +316,9 @@
         ]
       },
       fri: {
-        shortName: "EX Zora Pillar: Leg Quest",
+        shortName: "Zora Pillar: Leg Quest",
         location: "LA Fitness Domain",
-        title: "EX Zora Waterfall: Pillar & Leg (All-Machine)",
+        title: "Zora Waterfall: Pillar & Leg (All-Machine)",
         desc: "Build unwavering foundation strength like the stone pillars of Zora's Domain. Fixed machine trajectories eliminate spinal loading entirely.",
         xpPerTask: 15,
         bonusXp: 50,
@@ -338,9 +333,9 @@
         ]
       },
       sat: {
-        shortName: "EX Lakeside Stable Rest",
+        shortName: "Lakeside Stable Rest",
         location: "Lake Hylia Rest Site",
-        title: "EX Rest at the Lakeside Stable (Recovery)",
+        title: "Rest at the Lakeside Stable (Recovery)",
         desc: "A traveler must rest by the fireside. Rejuvenate joint cartilage and allow neuromuscular adaptation ahead of the Citadel armory trial.",
         xpPerTask: 10,
         bonusXp: 30,
@@ -351,9 +346,9 @@
         ]
       },
       sun: {
-        shortName: "EX Citadel Armory: Pull Quest",
+        shortName: "Citadel Armory: Pull Quest",
         location: "LA Fitness Citadel",
-        title: "EX Citadel Armory: Pull & Posterior (All-Machine)",
+        title: "Citadel Armory: Pull & Posterior (All-Machine)",
         desc: "Forge your posterior chain and back armor. Supported chest pads absorb torso weight so your lumbar spine stays neutral throughout.",
         xpPerTask: 15,
         bonusXp: 50,
@@ -501,6 +496,11 @@
       // Rank Title
       const rankKey = Math.min(state.level, 8);
       document.getElementById('rank-title').innerText = rankTitles[rankKey] || "Hero of Hyrule";
+
+      // 3 Base Hearts HUD, scaling by 1 every 2 levels up to 10
+      const heartCount = Math.min(3 + Math.floor((state.level - 1) / 2), 10);
+      const heartsContainer = document.getElementById('hearts-container');
+      heartsContainer.innerHTML = '❤️'.repeat(heartCount);
 
       // Count cleared this month
       let totalCleared = 0;
