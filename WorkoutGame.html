@@ -142,7 +142,7 @@
       />
 
       <div>
-        <!-- Quest Subheader Bar (Cleaned of red symbols) -->
+        <!-- Quest Subheader Bar -->
         <div class="flex items-center justify-between border-b border-slate-700/60 pb-3 mb-4">
           <div>
             <h2 id="quest-title" class="zelda-serif text-xl sm:text-2xl font-black text-white tracking-wide">
@@ -254,7 +254,7 @@
       sun: "Sunday"
     };
 
-    // --- 7-DAY TITLES CLEANED (NO 'EX') ---
+    // --- 7-DAY SCHEDULE (ALL CIRCUIT MACHINES) ---
     const weeklySchedule = {
       mon: {
         shortName: "Trial of Virtual Combat",
@@ -284,7 +284,7 @@
           { name: "Post-Hike Calf & Quad Gentle Stretch", cue: "Keep spine tall; avoid rounding lower back" }
         ]
       },
-            wed: {
+      wed: {
         shortName: "Goron Shield: Push Quest",
         location: "LA Fitness Forge",
         title: "Goron Forge: Push & Core (All-Machine)",
@@ -329,7 +329,7 @@
           { name: "Seated or Lying Hamstring Curls (3 × 12–15)", cue: "Align knees with pivot point; stabilizes posterior pelvis" },
           { name: "Glute Kickback Machine (3 × 12–15/leg)", cue: "Padded chest rest locks spine; squeeze glute at peak" },
           { name: "Seated Hip Abductor Machine (3 × 15)", cue: "Push outward against pads; strengthens SI-joint stabilizers" },
-          { name: "Leg Press Calf Extensions (3 × 15)", cue: "Drive through balls of feet; controlled ankle strength" }
+          { name: "Leg Press Calf Extensions (3 × 15)", cue: "Perform directly on the leg press footplate with balls of feet; controlled ankle range" }
         ]
       },
       sat: {
@@ -362,6 +362,7 @@
           { name: "Seated Abdominal Machine (3 × 12)", cue: "Seated crunch brace; curls ribs to hips with zero lower back strain" }
         ]
       }
+    };
 
     // --- STATE MANAGEMENT ---
     let currentSelectedDay = 'wed';
