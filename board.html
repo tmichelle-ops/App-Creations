@@ -6,183 +6,99 @@
   <title>Job Agent Board — Tamika McBride</title>
   <style>
     :root {
-      --bg: #f8fafc;
-      --surface: #ffffff;
-      --border: #e2e8f0;
-      --text: #0f172a;
-      --muted: #475569;
-      --accent: #1d4ed8;
-      --accent-soft: #eff6ff;
-      --green: #15803d;
-      --green-bg: #dcfce7;
-      --amber: #b45309;
-      --amber-bg: #fef3c7;
-      --red: #b91c1c;
-      --red-bg: #fee2e2;
-      --gray: #475569;
-      --gray-bg: #f1f5f9;
+      --bg: #f8fafc; --surface: #ffffff; --border: #e2e8f0;
+      --text: #0f172a; --muted: #475569; --accent: #1d4ed8;
+      --accent-soft: #eff6ff; --green: #15803d; --green-bg: #dcfce7;
+      --amber: #b45309; --amber-bg: #fef3c7; --red: #b91c1c;
+      --red-bg: #fee2e2; --gray: #475569; --gray-bg: #f1f5f9;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
+      background: var(--bg); color: var(--text); line-height: 1.5;
     }
     header {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 18px 24px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 18px 24px; position: sticky; top: 0; z-index: 10;
     }
     .header-inner {
-      max-width: 1120px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      max-width: 1120px; margin: 0 auto; display: flex; flex-wrap: wrap;
+      align-items: center; justify-content: space-between; gap: 12px;
     }
     h1 { margin: 0; font-size: 1.25rem; font-weight: 700; }
     .subtitle { margin: 2px 0 0; font-size: 0.85rem; color: var(--muted); }
     .controls {
-      max-width: 1120px;
-      margin: 18px auto 0;
-      padding: 0 24px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
+      max-width: 1120px; margin: 18px auto 0; padding: 0 24px;
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
     }
     input, select, button {
-      font-size: 0.9rem;
-      padding: 8px 12px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--surface);
-      color: var(--text);
+      font-size: 0.9rem; padding: 8px 12px; border: 1px solid var(--border);
+      border-radius: 8px; background: var(--surface); color: var(--text);
     }
     input[type="search"] { flex: 1; min-width: 220px; }
     button.primary {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-      cursor: pointer;
-      font-weight: 600;
+      background: var(--accent); color: #fff; border-color: var(--accent);
+      cursor: pointer; font-weight: 600;
     }
     button.secondary { cursor: pointer; }
     .stats {
-      max-width: 1120px;
-      margin: 14px auto 0;
-      padding: 0 24px;
-      font-size: 0.85rem;
-      color: var(--muted);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      max-width: 1120px; margin: 14px auto 0; padding: 0 24px;
+      font-size: 0.85rem; color: var(--muted); display: flex;
+      justify-content: space-between; align-items: center;
     }
     main {
-      max-width: 1120px;
-      margin: 16px auto 48px;
-      padding: 0 24px;
-      display: grid;
-      gap: 14px;
+      max-width: 1120px; margin: 16px auto 48px; padding: 0 24px;
+      display: grid; gap: 14px;
     }
     .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 18px 20px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px 20px;
       box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
     }
     .card-top {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
+      display: flex; flex-wrap: wrap; justify-content: space-between;
+      align-items: flex-start; gap: 12px;
     }
     .score-pill {
-      font-weight: 700;
-      font-size: 0.95rem;
-      padding: 4px 10px;
-      border-radius: 999px;
-      display: inline-block;
-      margin-right: 8px;
+      font-weight: 700; font-size: 0.95rem; padding: 4px 10px;
+      border-radius: 999px; display: inline-block; margin-right: 8px;
     }
     .score-high { background: var(--green-bg); color: var(--green); }
     .score-mid { background: var(--amber-bg); color: var(--amber); }
     .score-low { background: var(--red-bg); color: var(--red); }
     .title-link {
-      font-size: 1.08rem;
-      font-weight: 700;
-      color: var(--text);
-      text-decoration: none;
+      font-size: 1.08rem; font-weight: 700; color: var(--text); text-decoration: none;
     }
     .title-link:hover { color: var(--accent); text-decoration: underline; }
-    .meta {
-      margin-top: 6px;
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
+    .meta { margin-top: 6px; font-size: 0.88rem; color: var(--muted); }
     .badge {
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 3px 9px;
-      border-radius: 6px;
-      background: var(--gray-bg);
-      color: var(--gray);
+      font-size: 0.78rem; font-weight: 600; padding: 3px 9px;
+      border-radius: 6px; background: var(--gray-bg); color: var(--gray);
     }
-    .verdict {
-      margin: 10px 0 0;
-      font-size: 0.92rem;
-      font-weight: 500;
-    }
-    details {
-      margin-top: 12px;
-      border-top: 1px solid var(--border);
-      padding-top: 10px;
-    }
+    .verdict { margin: 10px 0 0; font-size: 0.92rem; font-weight: 500; }
+    details { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 10px; }
     summary {
-      cursor: pointer;
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--accent);
-      user-select: none;
+      cursor: pointer; font-size: 0.88rem; font-weight: 600;
+      color: var(--accent); user-select: none;
     }
     .detail-grid {
-      margin-top: 12px;
-      display: grid;
+      margin-top: 12px; display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 14px;
-      font-size: 0.88rem;
+      gap: 14px; font-size: 0.88rem;
     }
     .detail-box {
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
-      white-space: pre-line;
+      background: #f8fafc; border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px; white-space: pre-line;
     }
     .detail-box h4 {
-      margin: 0 0 6px;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--muted);
+      margin: 0 0 6px; font-size: 0.8rem; text-transform: uppercase;
+      letter-spacing: 0.04em; color: var(--muted);
     }
     .setup-banner {
-      max-width: 1120px;
-      margin: 16px auto 0;
-      padding: 14px 20px;
-      background: var(--accent-soft);
-      border: 1px solid #bfdbfe;
-      border-radius: 10px;
-      font-size: 0.88rem;
+      max-width: 1120px; margin: 16px auto 0; padding: 14px 20px;
+      background: var(--accent-soft); border: 1px solid #bfdbfe;
+      border-radius: 10px; font-size: 0.88rem;
     }
     .hidden { display: none; }
   </style>
@@ -202,14 +118,18 @@
   </header>
 
   <div id="setupBox" class="setup-banner hidden">
-    <strong>Connect Your Google Sheet (One-Time Setup):</strong>
+    <strong>Option 1 — Live Google Sheet Link (Zero-CORS JSONP):</strong>
     <ol style="margin: 6px 0 0 18px; padding: 0;">
-      <li>In your Google Sheet, click <strong>File &rarr; Share &rarr; Publish to web</strong>, choose <strong>Jobs</strong> (instead of Entire Document) and <strong>Comma-separated values (.csv)</strong>, then click <strong>Publish</strong> and copy the URL.</li>
-      <li>Paste that published CSV link below (saved locally in your browser only):</li>
+      <li>In Google Sheets, click <strong>Share</strong> (top right) &rarr; set <strong>General access</strong> to <strong>Anyone with the link (Viewer)</strong>.</li>
+      <li>Paste any link to your Google Sheet below (regular <code>/edit</code> URL or <code>/gviz/tq</code> URL):</li>
     </ol>
     <div style="display:flex; gap:8px; margin-top:10px;">
-      <input id="csvUrlInput" type="text" style="flex:1;" placeholder="https://docs.google.com/spreadsheets/d/e/.../pub?gid=...&single=true&output=csv" />
+      <input id="csvUrlInput" type="text" style="flex:1;" placeholder="https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit" />
       <button class="primary" onclick="saveUrl()">Save &amp; Load</button>
+    </div>
+    <div style="margin-top:12px; padding-top:10px; border-top:1px solid #bfdbfe;">
+      <strong>Option 2 — Load Downloaded CSV File Directly (Works if Sheet stays Restricted):</strong>
+      <input id="csvFileInput" type="file" accept=".csv" onchange="loadLocalFile(event)" style="margin-left:8px;" />
     </div>
   </div>
 
@@ -247,11 +167,16 @@
   <main id="cardsContainer"></main>
 
   <script>
-    const STORAGE_KEY = "job_agent_published_csv_url";
+    const STORAGE_KEY = "job_agent_sheet_url";
     let allJobs = [];
 
     function toggleSetup() {
       document.getElementById("setupBox").classList.toggle("hidden");
+    }
+
+    function extractSheetId(url) {
+      const m = (url || "").match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+      return m ? m[1] : null;
     }
 
     function saveUrl() {
@@ -260,6 +185,51 @@
       localStorage.setItem(STORAGE_KEY, val);
       document.getElementById("setupBox").classList.add("hidden");
       loadBoard();
+    }
+
+    function loadViaJsonp(sheetId) {
+      return new Promise((resolve, reject) => {
+        const cbName = "gvizCb_" + Date.now();
+        const script = document.createElement("script");
+        const timer = setTimeout(() => {
+          cleanup();
+          reject(new Error("Timed out. Make sure Share > General access is set to 'Anyone with the link'."));
+        }, 10000);
+
+        function cleanup() {
+          clearTimeout(timer);
+          delete window[cbName];
+          if (script.parentNode) script.parentNode.removeChild(script);
+        }
+
+        window[cbName] = function(resp) {
+          cleanup();
+          if (!resp || resp.status === "error") {
+            const msg = resp && resp.errors && resp.errors[0] ? resp.errors[0].detailed_message : "Google Sheets returned an access error";
+            reject(new Error(msg));
+            return;
+          }
+          const cols = resp.table.cols.map(c => (c.label || c.id || "").trim());
+          const rows = (resp.table.rows || []).map(r => {
+            const obj = {};
+            cols.forEach((h, idx) => {
+              const cell = r.c && r.c[idx];
+              obj[h] = cell && cell.v !== null && cell.v !== undefined ? String(cell.v).trim() : "";
+            });
+            obj._score = parseInt(obj["Fit Score"], 10) || 0;
+            return obj;
+          });
+          resolve(rows);
+        };
+
+        script.onerror = function() {
+          cleanup();
+          reject(new Error("Could not reach Google Sheets. Check that General access is 'Anyone with the link'."));
+        };
+
+        script.src = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=Jobs&headers=1&tqx=out:json;responseHandler:${cbName}&_cb=${Date.now()}`;
+        document.body.appendChild(script);
+      });
     }
 
     function parseCSV(text) {
@@ -279,24 +249,14 @@
       return rows;
     }
 
-    async function loadBoard() {
-      const url = localStorage.getItem(STORAGE_KEY);
-      if (!url) {
-        document.getElementById("setupBox").classList.remove("hidden");
-        document.getElementById("countLabel").textContent = "Paste your published Google Sheet CSV link above to load your board.";
-        return;
-      }
-      document.getElementById("csvUrlInput").value = url;
-      document.getElementById("countLabel").textContent = "Fetching latest rows from Google Sheets...";
-      try {
-        const resp = await fetch(url + (url.includes("?") ? "&" : "?") + "_cb=" + Date.now());
-        const csvText = await resp.text();
-        const matrix = parseCSV(csvText);
-        if (matrix.length < 2) {
-          allJobs = [];
-          renderCards();
-          return;
-        }
+    function loadLocalFile(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById("setupBox").classList.add("hidden");
+        const matrix = parseCSV(e.target.result);
+        if (matrix.length < 2) { allJobs = []; renderCards(); return; }
         const headers = matrix[0].map(h => h.trim());
         allJobs = matrix.slice(1).filter(r => r.some(c => c.trim())).map(r => {
           const obj = {};
@@ -306,8 +266,32 @@
         });
         allJobs.sort((a, b) => b._score - a._score);
         renderCards();
+      };
+      reader.readAsText(file);
+    }
+
+    async function loadBoard() {
+      const url = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("job_agent_published_csv_url");
+      if (!url) {
+        document.getElementById("setupBox").classList.remove("hidden");
+        document.getElementById("countLabel").textContent = "Paste your Google Sheet link above (or upload a CSV file).";
+        return;
+      }
+      document.getElementById("csvUrlInput").value = url;
+      const sheetId = extractSheetId(url);
+      if (!sheetId || sheetId === "e") {
+        document.getElementById("setupBox").classList.remove("hidden");
+        document.getElementById("countLabel").textContent = "Please paste your main Google Sheet URL (the one with /spreadsheets/d/1.../edit), not the /d/e/ publish URL.";
+        return;
+      }
+      document.getElementById("countLabel").textContent = "Loading latest rows from Google Sheets...";
+      try {
+        allJobs = await loadViaJsonp(sheetId);
+        allJobs.sort((a, b) => b._score - a._score);
+        renderCards();
       } catch (err) {
-        document.getElementById("countLabel").textContent = "Error loading CSV: " + err.message;
+        document.getElementById("setupBox").classList.remove("hidden");
+        document.getElementById("countLabel").textContent = "Error: " + err.message;
       }
     }
 
