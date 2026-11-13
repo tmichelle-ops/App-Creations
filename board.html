@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Agent Board — Tamika McBride</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #1d4ed8;
+      --accent-soft: #eff6ff;
+      --green: #15803d;
+      --green-bg: #dcfce7;
+      --amber: #b45309;
+      --amber-bg: #fef3c7;
+      --red: #b91c1c;
+      --red-bg: #fee2e2;
+      --gray: #475569;
+      --gray-bg: #f1f5f9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    h1 { margin: 0; font-size: 1.25rem; font-weight: 700; }
+    .subtitle { margin: 2px 0 0; font-size: 0.85rem; color: var(--muted); }
+    .controls {
+      max-width: 1120px;
+      margin: 18px auto 0;
+      padding: 0 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    input, select, button {
+      font-size: 0.9rem;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--text);
+    }
+    input[type="search"] { flex: 1; min-width: 220px; }
+    button.primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button.secondary { cursor: pointer; }
+    .stats {
+      max-width: 1120px;
+      margin: 14px auto 0;
+      padding: 0 24px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    main {
+      max-width: 1120px;
+      margin: 16px auto 48px;
+      padding: 0 24px;
+      display: grid;
+      gap: 14px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+    .card-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .score-pill {
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      display: inline-block;
+      margin-right: 8px;
+    }
+    .score-high { background: var(--green-bg); color: var(--green); }
+    .score-mid { background: var(--amber-bg); color: var(--amber); }
+    .score-low { background: var(--red-bg); color: var(--red); }
+    .title-link {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .title-link:hover { color: var(--accent); text-decoration: underline; }
+    .meta {
+      margin-top: 6px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .badge {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: var(--gray-bg);
+      color: var(--gray);
+    }
+    .verdict {
+      margin: 10px 0 0;
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+    details {
+      margin-top: 12px;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+    }
+    summary {
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--accent);
+      user-select: none;
+    }
+    .detail-grid {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+      font-size: 0.88rem;
+    }
+    .detail-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      white-space: pre-line;
+    }
+    .detail-box h4 {
+      margin: 0 0 6px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+    .setup-banner {
+      max-width: 1120px;
+      margin: 16px auto 0;
+      padding: 14px 20px;
+      background: var(--accent-soft);
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      font-size: 0.88rem;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div>
+        <h1>Personal Job Agent — Candidate Board</h1>
+        <p class="subtitle">Live view of your Google Sheets <code>Jobs</code> database (sorted by Fit Score)</p>
+      </div>
+      <div>
+        <button class="secondary" onclick="toggleSetup()">Sheet URL / CSV Setup</button>
+        <button class="primary" onclick="loadBoard()">Refresh</button>
+      </div>
+    </div>
+  </header>
+
+  <div id="setupBox" class="setup-banner hidden">
+    <strong>Connect Your Google Sheet (One-Time Setup):</strong>
+    <ol style="margin: 6px 0 0 18px; padding: 0;">
+      <li>In your Google Sheet, click <strong>File &rarr; Share &rarr; Publish to web</strong>, choose <strong>Jobs</strong> (instead of Entire Document) and <strong>Comma-separated values (.csv)</strong>, then click <strong>Publish</strong> and copy the URL.</li>
+      <li>Paste that published CSV link below (saved locally in your browser only):</li>
+    </ol>
+    <div style="display:flex; gap:8px; margin-top:10px;">
+      <input id="csvUrlInput" type="text" style="flex:1;" placeholder="https://docs.google.com/spreadsheets/d/e/.../pub?gid=...&single=true&output=csv" />
+      <button class="primary" onclick="saveUrl()">Save &amp; Load</button>
+    </div>
+  </div>
+
+  <div class="controls">
+    <input id="searchInput" type="search" placeholder="Search title, company, skills, or notes..." oninput="renderCards()" />
+    <select id="minScoreFilter" onchange="renderCards()">
+      <option value="0">All Scores</option>
+      <option value="8">Score 8+ (Top Matches)</option>
+      <option value="6" selected>Score 6+ (Digest Cutoff)</option>
+      <option value="5">Score 5+</option>
+    </select>
+    <select id="verdictFilter" onchange="renderCards()">
+      <option value="">All Verdicts</option>
+      <option value="Apply">Apply</option>
+      <option value="Apply with adjustments">Apply with adjustments</option>
+      <option value="Stretch">Stretch</option>
+      <option value="Needs review">Needs review</option>
+      <option value="Skip">Skip</option>
+    </select>
+    <select id="statusFilter" onchange="renderCards()">
+      <option value="">All Statuses</option>
+      <option value="New">New</option>
+      <option value="Applied">Applied</option>
+      <option value="Interviewing">Interviewing</option>
+      <option value="Rejected">Rejected</option>
+      <option value="Archived">Archived</option>
+    </select>
+  </div>
+
+  <div class="stats">
+    <span id="countLabel">Loading jobs...</span>
+    <span>Edit Status directly in Google Sheets</span>
+  </div>
+
+  <main id="cardsContainer"></main>
+
+  <script>
+    const STORAGE_KEY = "job_agent_published_csv_url";
+    let allJobs = [];
+
+    function toggleSetup() {
+      document.getElementById("setupBox").classList.toggle("hidden");
+    }
+
+    function saveUrl() {
+      const val = document.getElementById("csvUrlInput").value.trim();
+      if (!val) return;
+      localStorage.setItem(STORAGE_KEY, val);
+      document.getElementById("setupBox").classList.add("hidden");
+      loadBoard();
+    }
+
+    function parseCSV(text) {
+      const rows = [];
+      let row = [], cell = "", inQuotes = false;
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i], next = text[i + 1];
+        if (ch === '"' && inQuotes && next === '"') { cell += '"'; i++; }
+        else if (ch === '"') { inQuotes = !inQuotes; }
+        else if (ch === ',' && !inQuotes) { row.push(cell); cell = ""; }
+        else if ((ch === '\n' || (ch === '\r' && next === '\n')) && !inQuotes) {
+          if (ch === '\r') i++;
+          row.push(cell); rows.push(row); row = []; cell = "";
+        } else { cell += ch; }
+      }
+      if (cell.length || row.length) { row.push(cell); rows.push(row); }
+      return rows;
+    }
+
+    async function loadBoard() {
+      const url = localStorage.getItem(STORAGE_KEY);
+      if (!url) {
+        document.getElementById("setupBox").classList.remove("hidden");
+        document.getElementById("countLabel").textContent = "Paste your published Google Sheet CSV link above to load your board.";
+        return;
+      }
+      document.getElementById("csvUrlInput").value = url;
+      document.getElementById("countLabel").textContent = "Fetching latest rows from Google Sheets...";
+      try {
+        const resp = await fetch(url + (url.includes("?") ? "&" : "?") + "_cb=" + Date.now());
+        const csvText = await resp.text();
+        const matrix = parseCSV(csvText);
+        if (matrix.length < 2) {
+          allJobs = [];
+          renderCards();
+          return;
+        }
+        const headers = matrix[0].map(h => h.trim());
+        allJobs = matrix.slice(1).filter(r => r.some(c => c.trim())).map(r => {
+          const obj = {};
+          headers.forEach((h, idx) => obj[h] = (r[idx] || "").trim());
+          obj._score = parseInt(obj["Fit Score"], 10) || 0;
+          return obj;
+        });
+        allJobs.sort((a, b) => b._score - a._score);
+        renderCards();
+      } catch (err) {
+        document.getElementById("countLabel").textContent = "Error loading CSV: " + err.message;
+      }
+    }
+
+    function escapeHtml(str) {
+      return (str || "").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+
+    function renderCards() {
+      const q = document.getElementById("searchInput").value.toLowerCase();
+      const minScore = parseInt(document.getElementById("minScoreFilter").value, 10) || 0;
+      const verdictF = document.getElementById("verdictFilter").value;
+      const statusF = document.getElementById("statusFilter").value;
+
+      const filtered = allJobs.filter(j => {
+        if (j._score < minScore) return false;
+        if (verdictF && !(j["Verdict"] || "").startsWith(verdictF)) return false;
+        if (statusF && (j["Status"] || "") !== statusF) return false;
+        if (q) {
+          const blob = Object.values(j).join(" ").toLowerCase();
+          if (!blob.includes(q)) return false;
+        }
+        return true;
+      });
+
+      document.getElementById("countLabel").textContent = `Showing ${filtered.length} of ${allJobs.length} scored roles`;
+      const container = document.getElementById("cardsContainer");
+      if (!filtered.length) {
+        container.innerHTML = `<div class="card">No jobs match your current filters. Try lowering the minimum score filter above.</div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(j => {
+        const cls = j._score >= 8 ? "score-high" : j._score >= 6 ? "score-mid" : "score-low";
+        const comp = j["Posted Comp"] || j["Comp Note"] || "Not posted";
+        return `
+          <article class="card">
+            <div class="card-top">
+              <div>
+                <span class="score-pill ${cls}">${j._score}/10</span>
+                <a class="title-link" href="${escapeHtml(j["Job URL"])}" target="_blank" rel="noopener">${escapeHtml(j["Job Title"])}</a>
+                <div class="meta"><strong>${escapeHtml(j["Company"])}</strong> &bull; ${escapeHtml(j["Location"])} &bull; ${escapeHtml(comp)} &bull; Found ${escapeHtml(j["Found On"])}</div>
+              </div>
+              <span class="badge">${escapeHtml(j["Status"] || "New")}</span>
+            </div>
+            <p class="verdict">${escapeHtml(j["Verdict"])}</p>
+            <details>
+              <summary>Expand Recruiter Notes, Flags &amp; Resume Adaptations</summary>
+              <div class="detail-grid">
+                <div class="detail-box"><h4>Why Fit</h4>${escapeHtml(j["Why Fit"])}</div>
+                <div class="detail-box"><h4>Recruiter Flags &amp; Ready Answers</h4>${escapeHtml(j["Recruiter Flags"])}</div>
+                <div class="detail-box"><h4>Resume Adaptations (10-Min Edits)</h4>${escapeHtml(j["Resume Adaptations"])}</div>
+                <div class="detail-box"><h4>Comp &amp; Location Check</h4><strong>Comp:</strong> ${escapeHtml(j["Comp Note"])}\n\n<strong>Location:</strong> ${escapeHtml(j["Location Note"])}</div>
+              </div>
+            </details>
+          </article>
+        `;
+      }).join("");
+    }
+
+    loadBoard();
+  </script>
+</body>
+</html>
